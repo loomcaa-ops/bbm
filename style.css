@@ -1,0 +1,555 @@
+/* Reset dan Pengaturan Dasar */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e6f7ff;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    flex-direction: column;
+}
+
+#app-wrapper {
+    display: flex;
+    flex-direction: column; /* Column agar race-track di atas, keypads di bawah */
+    width: 100vw; /* Lebar penuh */
+    height: 100vh; /* Tinggi penuh */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+#top-right-controls {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 1000;
+    display: flex;
+    gap: 15px;
+}
+
+#game-container {
+    width: 100%;
+    /* BERUBAH: Tinggi tetap lebih kecil, tidak lagi flex-grow: 1 */
+    /*height: 35vh;  Tinggi untuk race track */
+	flex-grow: 1;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    box-sizing: border-box;
+    border-bottom: 2px solid #ccc; /* Pemisah visual */
+}
+
+/* ... (SEMUA STYLE .icon-btn, .btn-main, .btn-secondary, .btn-danger TETAP SAMA) ... */
+.icon-btn {
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    color: #555;
+}
+
+.full-reset {
+    padding: 5px 7px;
+    background-color: #4CAF50;
+    border: 1px solid #fff;
+    border-radius: 90px;
+    cursor: pointer;
+	color: white;
+}
+
+.btn-main {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn-main:hover {
+    background-color: #45a049;
+}
+
+.btn-secondary {
+    background-color: #f1f1f1;
+    color: #333;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #e0e0e0;
+}
+
+.btn-danger {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+}
+
+
+/* Layar (Start & Balap) */
+.screen {
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+.screen.active {
+    display: block;
+}
+
+/* Layar Awal */
+#start-screen.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#start-ducks-display {
+    margin: 20px 0;
+    font-size: 3rem;
+}
+
+#start-ducks-display span {
+    margin: 0 10px;
+}
+
+/* Arena Balap */
+#race-track {
+    position: relative;
+    /*border-bottom: 10px solid #2e2e2e;  Diperkecil */
+    background: #00BFFF;
+    height: 100%; /* Mengisi tinggi container game */
+    box-sizing: border-box;
+    width: 100%; /* Pastikan mengisi lebar penuh */
+}
+
+/* STYLE BARU UNTUK CANVAS */
+#race-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* ... (Modal Base & Modal Konfigurasi TETAP SAMA) ... */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+/* Modal Konfigurasi */
+#duck-configs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.duck-config-item {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    background: #f9f9f9;
+}
+
+.duck-config-item h3 {
+    margin-top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* BERUBAH: Dibuat 1 kolom karena input lebih sedikit */
+.config-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 kolom: Nama dan Warna */
+    gap: 10px;
+}
+
+.config-grid label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.config-grid input[type="color"] {
+    padding: 0;
+    height: 38px; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%; /* Pastikan mengisi grid */
+}
+
+/* Input teks agar seragam */
+.config-grid input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Modal Hitung Mundur & Pemenang */
+#countdown-overlay {
+    color: white;
+    font-size: 10vw;
+    font-weight: bold;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+}
+
+#winner-modal .modal-content {
+    text-align: center;
+}
+
+#winner-message {
+    font-size: 1.8rem;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+/* ... (Style Fullscreen TETAP SAMA) ... */
+:root:fullscreen body,
+:root:fullscreen #app-wrapper {
+    
+    width: 100%;
+    height: 100vh; /* Isi seluruh layar */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+:root:fullscreen #game-container {
+    
+    flex-grow: 1;
+    border-radius: 0;
+}
+
+
+
+/* ... (Style Confetti & Keyframes TETAP SAMA) ... */
+#confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 999;
+}
+
+
+@keyframes explode {
+    0% {
+        transform: translate(0, 0) rotateZ(0deg) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--x-end), var(--y-end)) rotateZ(720deg) scale(0);
+        opacity: 0;
+    }
+}
+
+/* --- STYLE BARU UNTUK PLAYER KEYPADS --- */
+
+.hidden {
+    display: none !important; /* Paksa sembunyi */
+}
+
+#player-keypads {
+    /* flex-grow: 1; */ /* DIHAPUS: Ini tidak boleh mengisi ruang lagi */
+    flex-shrink: 0;
+    /* === PERUBAHAN DI SINI === */
+    display: flex;
+    flex-wrap: nowrap; /* BARU: Memaksa semua keypad tetap 1 baris */
+    justify-content: space-around; /* BARU: Menyebar keypad secara merata */
+    align-items: center; /* BARU: Menengahkan keypad secara vertikal */
+    /* flex-wrap: wrap; */        /* DIHAPUS */
+    /* align-items: flex-start; */ /* DIHAPUS */
+    
+    gap: 10px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    
+    /* BARU: Tambahkan scroll horizontal jika layar terlalu sempit */
+    overflow-x: auto; 
+    
+    box-sizing: border-box;
+	margin-bottom: 10px; /* BARU: Memberi jarak dari tepi bawah layar */
+}
+
+.player-keypad {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    
+    /* === PERUBAHAN DI SINI === */
+    /* flex: 1 1 calc(50% - 20px); */ /* DIHAPUS: Ini yang memaksa 2 per baris */
+    flex-grow: 1; /* BARU: Izinkan keypad tumbuh mengisi ruang */
+    flex-shrink: 1; /* BARU: Izinkan keypad menyusut jika perlu */
+    flex-basis: 240px; /* BARU: Ukuran ideal keypad */
+    
+    max-width: 350px; /* Batasi lebar maksimal */
+    min-width: 240px; /* BARU: Batasi lebar minimal agar tidak terlalu kecil */
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0; 
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden; 
+}
+
+
+
+
+.keypad-header {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    width: 100%;
+    padding: 10px; /* Padding internal untuk teks soal */
+    box-sizing: border-box; 
+    border-radius: 8px 8px 0 0;
+}
+
+.keypad-header .duck-name {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #333;
+    flex-grow: 1; /* Push question to center */
+    text-align: left;
+    white-space: nowrap; /* Jangan wrap nama bebek */
+    overflow: hidden; /* Sembunyikan jika terlalu panjang */
+    text-overflow: ellipsis; /* Tambahkan elipsis jika tersembunyi */
+}
+
+.keypad-question {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-left: auto; /* Push question to the right if duck name is short */
+    margin-right: auto;
+    white-space: nowrap; /* Jangan wrap soal */
+}
+
+.keypad-answer-display {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #000;
+    margin-top: 10px; 
+    min-height: 40px; 
+    text-align: center;
+    
+    /* === PERUBAHAN DI SINI === */
+    /* 1. Gunakan calc() untuk lebar (100% dikurangi 15px di kiri & 15px di kanan) */
+    width: calc(100% - 30px); 
+    
+    /* 2. Gunakan margin auto untuk menengahkan kotak secara horizontal */
+    margin-left: auto;
+    margin-right: auto;
+    
+    /* 3. Padding L/R tidak lagi diperlukan karena teks sudah di-center */
+    box-sizing: border-box; 
+    /* padding-left: 15px; */  /* DIHAPUS */
+    /* padding-right: 15px; */ /* DIHAPUS */
+    /* === AKHIR PERUBAHAN === */
+    
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+/* INI ADALAH STYLE KEYPAD DARI TARIK TAMBANG */
+.keypad-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    width: 100%;
+    max-width: 200px; 
+    margin-top: 10px; /* BARU: Spasi dari answer display */
+    margin-bottom: 15px;
+	
+}
+
+.keypad-button {
+    width: 100%;
+    height: 50px;
+    font-size: 1.5rem;
+    
+	background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.keypad-button:hover {
+    background-color: #d0d0d0;
+}
+
+.keypad-button:active {
+    transform: scale(0.95);
+}
+
+/* === BLOK INI TELAH DIPERBARUI === */
+.keypad-button.submit-btn {
+    background-color: #008CBA; /* BERUBAH: Warna biru seperti di gambar */
+    color: white;
+    /* grid-column: span 2; */ /* DIHAPUS: Aturan ini dihapus agar layoutnya 1x1 */
+}
+.keypad-button.submit-btn:hover {
+    background-color: #007b9a; /* BERUBAH: Warna hover biru tua */
+}
+/* === AKHIR BLOK YANG DIPERBARUI === */
+
+
+.keypad-button.clear-btn {
+    background-color: #f44336;
+    color: white;
+}
+.keypad-button.clear-btn:hover {
+    background-color: #d32f2f;
+}
+/* AKHIR DARI STYLE KEYPAD */
+
+/* Animasi shake untuk jawaban salah */
+.player-keypad.shake {
+    animation: shake 0.5s;
+    border-color: #f44336;
+}
+
+/* Indikator giliran aktif */
+.player-keypad.active-turn {
+    outline: 4px solid #4CAF50; /* Border hijau untuk giliran aktif */
+    outline-offset: -2px;
+    position: relative; /* Untuk pseudo-element */
+    z-index: 10; /* Pastikan di atas yang lain */
+}
+
+.player-keypad.active-turn::before {
+    content: 'GILIRAN ANDA!';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+
+/* === TAMBAHKAN KODE INI DI AKHIR style.css === */
+
+/* Grid baru untuk menampung kartu */
+.mode-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Style kartu dari Anda */
+.mode-card {
+    background-color: #f0f0f0;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    width: 100px; /* Lebar kartu */
+    height: 80px; /* Tinggi kartu */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    /* Tambahan untuk teks */
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Efek hover untuk kartu */
+.mode-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    border-color: #008CBA; /* Warna biru (opsional) */
+}
+
+.mode-card .mode-symbol {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem; /* Ukuran simbol (sekitar 56px) */
+    font-weight: bold;
+    color: #555; /* Warna simbol */
+    line-height: 1; /* Pastikan centering pas */
+}
+
+.mode-card h3 {
+    margin: 0;
+    color: #333;
+    font-size: 0.8em;
+    text-align: center;
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balap Bebek Matematika</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div id="top-right-controls">
+		<button id="config-btn" class="icon-btn">⚙️</button>
+		<button id="fullscreen-btn" class="icon-btn full-reset">⛶</button>
+		<button id="reload-btn" class="icon-btn full-reset">↻</button> 
+	</div> <div id="app-wrapper">
+        
+        <div id="game-container">
+            <div id="start-screen" class="screen active">
+                <h1 style="margin-bottom:-20px;">Balap Bebek Matematika</h1>
+				<h4>untuk Interactive Flat Panel</h4>
+                <div id="start-ducks-display">
+                    </div>
+                
+                <button id="start-btn" class="btn-main">Masuk</button>
+				<h4>Creator: Saloom RD, ST - Guru Informatika SMP Negeri 10 Tebing Tinggi</h4>
+            </div>
+
+            <div id="race-track" class="screen">
+                <canvas id="race-canvas"></canvas>
+            </div>
+
+            <div id="countdown-overlay" class="modal-overlay">
+                <h1 id="countdown-text">3</h1>
+            </div>
+
+            <div id="config-modal" class="modal-overlay">
+                <div class="modal-content">
+                    <h2>Konfigurasi Bebek (Maks. 5)</h2>
+                    <div id="duck-configs-container">
+                        </div>
+                    <button id="add-duck-btn" class="btn-secondary">+ Tambah Bebek</button>
+                    <hr>
+                    <div class="modal-actions">
+                        <button id="cancel-btn" class="btn-secondary">Batal</button>
+                        <button id="save-btn" class="btn-main">Simpan</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="mode-modal" class="modal-overlay">
+                <div class="modal-content">
+                    <h2>Pilih Mode Permainan</h2>
+                    
+                    <div class="mode-grid">
+                        <div class="mode-card" data-op="+">
+                            <span class="mode-symbol">+</span> <h3>Tambah</h3>
+                        </div>
+                        <div class="mode-card" data-op="-">
+                            <span class="mode-symbol">−</span> <h3>Kurang</h3>
+                        </div>
+                        <div class="mode-card" data-op="*">
+                            <span class="mode-symbol">×</span> <h3>Kali</h3>
+                        </div>
+                        <div class="mode-card" data-op="/">
+                            <span class="mode-symbol">÷</span> <h3>Bagi</h3>
+                        </div>
+                    </div>
+				</div>
+            </div>
+			
+            <div id="winner-modal" class="modal-overlay">
+                <div class="modal-content">
+					<div id="winner-duck-display" style="font-size: 5rem; margin-top: 10px;"></div>
+                    <h2 id="winner-message"></h2>
+                    <button id="play-again-btn" class="btn-main">Main Lagi</button>
+                </div>
+			<div id="confetti-container"></div> </div>
+        </div> 
+
+        <div id="player-keypads" class="hidden">
+            </div>
+
+    </div> 
+    
+    <script src="script.js"></script>
+</body>
+</html>
