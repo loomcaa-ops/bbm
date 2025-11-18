@@ -4,6 +4,15 @@ import random
 # Inisialisasi aplikasi Flask
 app = Flask(__name__)
 
+# Tambahkan fungsi baru ini di file api/index.py Anda
+@app.route('/api/config', methods=['GET'])
+def get_config():
+    # Anda bisa tambahkan info lain di sini jika mau
+    config_data = {
+        'creatorName': 'Creator: Saloom RD, ST - Guru Informatika SMP Negeri 10 Tebing Tinggi'
+    }
+    return jsonify(config_data)
+    
 # Buat satu rute (endpoint) di /api/problem
 # Vercel akan otomatis menangani ini dari nama file
 @app.route('/api/problem', methods=['GET'])
@@ -51,3 +60,4 @@ def get_problem():
 # Vercel akan mengabaikan ini saat deploy
 if __name__ == '__main__':
     app.run(debug=True)
+    
