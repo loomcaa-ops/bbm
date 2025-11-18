@@ -310,6 +310,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         for (const duck of ducks) {
             
+            // === BARIS INI HILANG ===
+            // Terapkan kecepatan bebek ke posisinya
+            duck.position += duck.speed; 
+            // === AKHIR PERBAIKAN ===
+
             drawDuck(duck);
             
             const duckRightEdge = duck.position + (DUCK_SIZE_PX / 2);
