@@ -9,7 +9,7 @@ app = Flask(__name__)
 def get_config():
     # Anda bisa tambahkan info lain di sini jika mau
     config_data = {
-        'creatorName': 'Creator: Saloom RD, ST - Guru Informatika SMP Negeri 10 Tebing Tinggi'
+        'creatorName': 'Creator: Saloom RD, ST - SMP Negeri 10 Tebing Tinggi'
     }
     return jsonify(config_data)
     
@@ -61,3 +61,4 @@ def get_problem():
 if __name__ == '__main__':
     app.run(debug=True)
     
+
