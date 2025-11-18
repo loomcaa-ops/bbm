@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // === DIUBAH ===
     // Ini bukan lagi 'lompatan', tapi 'tambahan kecepatan'
     const DUCK_ACCELERATION = 0.01; // Sesuai permintaan Anda
-    const DUCK_BASE_SPEED = 0.05;   // Kecepatan merayap awal
+    const DUCK_BASE_SPEED = 0;   // Kecepatan merayap awal
 
     // === FUNGSI LOGIKA ===
 
@@ -117,10 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /**
-     * === FUNGSI INI TELAH DIPERBARUI ===
-     * Menambahkan duck.speed
-     */
     function loadSettings() {
         const savedDucks = localStorage.getItem('duckRaceSettings');
         if (savedDucks) {
@@ -184,10 +180,6 @@ document.addEventListener('DOMContentLoaded', () => {
         duckConfigsContainer.insertAdjacentHTML('beforeend', configHTML);
     }
 
-    /**
-     * === FUNGSI INI TELAH DIPERBARUI ===
-     * Menambahkan duck.speed
-     */
     function saveSettings() {
         const newDucks = [];
         const configItems = duckConfigsContainer.querySelectorAll('.duck-config-item');
@@ -299,7 +291,22 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.restore();
     }
 
-    
+    async function loadAppConfig() {
+        try {
+            // Panggil API /api/config baru yang kita buat di Python
+            const response = await fetch('/api/config');
+            const data = await response.json();
+            
+            // Masukkan data ke placeholder <span> yang kita buat di HTML
+            document.getElementById('creator-info').innerText = data.creatorName;
+
+        } catch (error) {
+            console.error('Gagal memuat info creator:', error);
+            // Tampilkan error jika server gagal dihubungi
+            document.getElementById('creator-info').innerText = 'Gagal memuat data.';
+        }
+    }
+	
     function gameLoop() {
         if (!isRacing) return;
         
@@ -573,5 +580,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === INISIALISASI ===
     loadSettings();
+	loadAppConfig();
     resizeCanvas();
 });
